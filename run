@@ -1,3 +1,5 @@
 docker run -t -i \
+  --privileged \
   --volume=$(pwd)/../fruitymesh:/opt/fruityfactory/nrf/projects/fruitymesh \
+	--volume=/dev/bus/usb:/dev/bus/usb \
   fruityfactory /bin/bash
