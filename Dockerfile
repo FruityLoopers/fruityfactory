@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
   unzip \
   binutils-avr \
 	git \
-  cmake 
+  cmake \
+	minicom screen
 
 RUN mkdir -p /opt/fruityfactory/downloads
 
@@ -39,4 +40,8 @@ COPY files/Makefile.posix nrf/sdk/nrf_sdk_9_0/components/toolchain/gcc/Makefile.
 COPY files/Makefile.posix nrf/sdk/nrf52_sdk_0_9_1/components/toolchain/gcc/Makefile.posix
 
 COPY files/nrf_svc.h nrf/sdk/nrf_sdk_9_0/components/softdevice/s130/headers/nrf_svc.h
+
+RUN cd nrf/sdk/nrf_sdk_9_0 && wget -qO- https://devzone.nordicsemi.com/attachment/a7a813d4112f2f2f4921a8e6a3a60b67 | patch -p1
+
+RUN sed -i 's/^#define GPIOTE_ENABLED.*/#define GPIOTE_ENABLED 1/' nrf/sdk/nrf_sdk_9_0/components/drivers_nrf/config/nrf_drv_config.h
 
